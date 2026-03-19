@@ -1,0 +1,28 @@
+2026/03/18-00:58:45.871 2494 Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\session_whatsapp\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/18-00:58:45.872 2494 Recovering log #150
+2026/03/18-00:58:45.910 2494 Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\session_whatsapp\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000150.log 
+2026/03/18-00:58:55.103 d18 Level-0 table #158: started
+2026/03/18-00:58:55.169 d18 Level-0 table #158: 1091457 bytes OK
+2026/03/18-00:58:55.171 d18 Delete type=0 #150
+2026/03/18-00:58:55.188 2844 Compacting 1@1 + 4@2 files
+2026/03/18-00:58:55.372 2844 Generated table #159@1: 77318 keys, 2275176 bytes
+2026/03/18-00:58:55.533 2844 Generated table #160@1: 43469 keys, 2210529 bytes
+2026/03/18-00:58:55.653 2844 Generated table #161@1: 22561 keys, 2178648 bytes
+2026/03/18-00:58:55.802 2844 Generated table #162@1: 67341 keys, 1856438 bytes
+2026/03/18-00:58:55.802 2844 Compacted 1@1 + 4@2 files => 8520791 bytes
+2026/03/18-00:58:55.803 2844 compacted to: files[ 0 0 4 0 0 0 0 ]
+2026/03/18-00:59:25.551 2844 Level-0 table #164: started
+2026/03/18-00:59:25.631 2844 Level-0 table #164: 1083864 bytes OK
+2026/03/18-00:59:25.633 2844 Delete type=2 #152
+2026/03/18-00:59:25.633 2844 Delete type=2 #153
+2026/03/18-00:59:25.633 2844 Delete type=2 #154
+2026/03/18-00:59:25.634 2844 Delete type=2 #155
+2026/03/18-00:59:25.634 2844 Delete type=0 #157
+2026/03/18-00:59:25.634 2844 Delete type=2 #158
+2026/03/18-00:59:26.884 2844 Compacting 1@1 + 4@2 files
+2026/03/18-00:59:27.095 2844 Generated table #165@1: 55445 keys, 2248133 bytes
+2026/03/18-00:59:27.271 2844 Generated table #166@1: 43515 keys, 2210578 bytes
+2026/03/18-00:59:27.381 2844 Generated table #167@1: 21147 keys, 2170797 bytes
+2026/03/18-00:59:27.530 2844 Generated table #168@1: 63607 keys, 1574434 bytes
+2026/03/18-00:59:27.530 2844 Compacted 1@1 + 4@2 files => 8203942 bytes
+2026/03/18-00:59:27.531 2844 compacted to: files[ 0 0 4 0 0 0 0 ]

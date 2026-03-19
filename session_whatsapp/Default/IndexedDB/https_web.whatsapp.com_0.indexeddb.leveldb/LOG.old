@@ -1,0 +1,33 @@
+2026/03/18-00:51:45.158 227c Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\session_whatsapp\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/18-00:51:45.159 227c Recovering log #137
+2026/03/18-00:51:45.273 227c Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\session_whatsapp\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000137.log 
+2026/03/18-00:51:57.637 205c Level-0 table #145: started
+2026/03/18-00:51:57.698 205c Level-0 table #145: 1128046 bytes OK
+2026/03/18-00:51:57.702 205c Delete type=0 #137
+2026/03/18-00:51:57.709 205c Compacting 1@1 + 4@2 files
+2026/03/18-00:51:57.864 205c Generated table #146@1: 51886 keys, 2245509 bytes
+2026/03/18-00:51:57.991 205c Generated table #147@1: 42246 keys, 2207499 bytes
+2026/03/18-00:51:58.077 205c Generated table #148@1: 27333 keys, 2174387 bytes
+2026/03/18-00:51:58.190 205c Generated table #149@1: 56117 keys, 1403988 bytes
+2026/03/18-00:51:58.190 205c Compacted 1@1 + 4@2 files => 8031383 bytes
+2026/03/18-00:51:58.191 205c compacted to: files[ 0 0 4 0 0 0 0 ]
+2026/03/18-00:51:58.192 205c Delete type=2 #139
+2026/03/18-00:51:58.192 205c Delete type=2 #140
+2026/03/18-00:51:58.192 205c Delete type=2 #141
+2026/03/18-00:51:58.192 205c Delete type=2 #142
+2026/03/18-00:51:58.192 205c Delete type=2 #145
+2026/03/18-00:52:32.828 205c Level-0 table #151: started
+2026/03/18-00:52:32.881 205c Level-0 table #151: 1083795 bytes OK
+2026/03/18-00:52:32.883 205c Delete type=0 #144
+2026/03/18-00:52:32.918 205c Compacting 1@1 + 4@2 files
+2026/03/18-00:52:33.061 205c Generated table #152@1: 53549 keys, 2247070 bytes
+2026/03/18-00:52:33.221 205c Generated table #153@1: 43072 keys, 2209767 bytes
+2026/03/18-00:52:33.336 205c Generated table #154@1: 23955 keys, 2171147 bytes
+2026/03/18-00:52:33.470 205c Generated table #155@1: 59716 keys, 1485618 bytes
+2026/03/18-00:52:33.470 205c Compacted 1@1 + 4@2 files => 8113602 bytes
+2026/03/18-00:52:33.471 205c compacted to: files[ 0 0 4 0 0 0 0 ]
+2026/03/18-00:52:33.471 205c Delete type=2 #146
+2026/03/18-00:52:33.472 205c Delete type=2 #147
+2026/03/18-00:52:33.472 205c Delete type=2 #148
+2026/03/18-00:52:33.472 205c Delete type=2 #149
+2026/03/18-00:52:33.472 205c Delete type=2 #151

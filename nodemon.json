@@ -1,0 +1,4 @@
+{
+  "ignore": ["output/*", "node_modules/*"],
+  "watch": ["server.js", "scrapingFunctions.js"]
+}
