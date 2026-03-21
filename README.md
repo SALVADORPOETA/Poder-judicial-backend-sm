@@ -59,7 +59,7 @@ El backend no es solo un puente de datos; es un **orquestador de automatización
 git clone https://github.com/SALVADORPOETA/Poder-judicial-backend-sm.git
 
 # Navegar al directorio
-cd Poder-judicial-backend-sm
+cd poder-judicial-backend-sm
 
 # Instalar dependencias
 npm install
