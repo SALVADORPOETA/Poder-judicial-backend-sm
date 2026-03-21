@@ -71,7 +71,7 @@ npm install
 
 Create a `.env` file in the root directory:
 ```env
-PORT=3000
+PORT=3001
 FRONTEND_URL=http://localhost:5173
 # Additional API configurations if necessary
 ```
