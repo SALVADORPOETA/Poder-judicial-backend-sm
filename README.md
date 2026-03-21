@@ -96,7 +96,6 @@ El servidor estará escuchando en `http://localhost:3000`.
 
 ### Procesamiento
 * `POST /api/generate-excel`: Toma un objeto JSON y devuelve un archivo `.xlsx` listo para descargar.
-* `POST /api/process-names`: Endpoint de utilidad para normalizar nombres y asignar géneros.
 
 
 
