@@ -40,7 +40,7 @@ El backend no es solo un puente de datos; es un **orquestador de automatización
 | **Excel Library** | ExcelJS / XLSX |
 | **Parsing** | Body-parser / Multer |
 | **Environment** | Dotenv |
-| **Deployment** | Railway / Render / DigitalOcean |
+| **Deployment** | Vercel |
 
 ---
 
