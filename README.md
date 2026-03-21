@@ -1,38 +1,40 @@
-# Poder Judicial - Backend
+# PJF Backend Data Engine
 
-**Poder Judicial - Backend** es el núcleo de procesamiento y automatización que alimenta la suite de herramientas para el **Poder Judicial de la Federación**. Construido con **Node.js** y **Express**, este motor se encarga de las tareas más críticas: desde la navegación automatizada en portales judiciales hasta la generación de reportes inteligentes y el procesamiento de lenguaje natural para la detección de género.
+**PJF Backend Data Engine** is the processing and automation core that powers my project **PJF Data & Messaging Suite**. Built with **Node.js** and **Express**, this engine handles the most critical tasks: from automated navigation in judicial portals to intelligent report generation and natural language processing for gender detection.
 
-Este servidor está diseñado para manejar flujos de trabajo asíncronos complejos, garantizando que la extracción de datos sea precisa, estructurada y lista para su consumo inmediato en el frontend.
+This server is designed to handle complex asynchronous workflows, ensuring that data extraction is precise, structured, and ready for immediate consumption by the frontend.
 
 ---
 
 ## ✨ Overview
 
-El backend no es solo un puente de datos; es un **orquestador de automatización** que implementa:
+The backend is not just a data bridge; it is an **automation orchestrator** that implements:
 
-* **Scraping Multi-nivel:** Navegación programática mediante **Puppeteer** para extraer información de directorios judiciales complejos.
-* **Procesamiento de Archivos:** Generación dinámica de archivos Excel (.xlsx) y manipulación de streams JSON.
-* **Motor de Normalización:** Limpieza de nombres y estandarización de datos judiciales crudos.
-* **Arquitectura Escalable:** Endpoints optimizados para manejar peticiones de larga duración (scraping detallado).
-* **Seguridad de Datos:** Validación de esquemas y manejo de errores robusto para evitar fallos en procesos masivos.
+* **Multi-level Scraping:** Programmatic navigation using **Puppeteer** to extract information from complex judicial directories.
+* **File Processing:** Dynamic generation of Excel files (.xlsx) and manipulation of JSON streams.
+* **Normalization Engine:** Cleaning of names and standardization of raw judicial data.
+* **Scalable Architecture:** Endpoints optimized to handle long-running requests (detailed scraping).
+* **Data Security:** Schema validation and robust error handling to prevent failures in bulk processes.
+
+
 
 ---
 
 ## 🚀 Features
 
-* ⚙️ **API RESTful:** Estructura de endpoints clara y documentada para cada fase del proceso.
-* 🕷️ **Headless Browser Integration:** Automatización de Chrome para acceder a datos que no están disponibles vía API pública.
-* 📊 **Excel Engine:** Creación de reportes profesionales con formato unificado.
-* 🧠 **Detección de Género:** Lógica integrada para clasificar perfiles basándose en diccionarios de nombres normalizados.
-* 📂 **File Handling:** Gestión de subida y lectura de archivos JSON para procesamiento por lotes (batching).
-* 🛡️ **CORS & Security:** Configuración lista para entornos de producción y consumo desde dominios específicos.
-* ⚡ **Async Processing:** Manejo eficiente de promesas para no bloquear el hilo principal durante el scraping.
+* ⚙️ **RESTful API:** Clear and documented endpoint structure for each phase of the process.
+* 🕷️ **Headless Browser Integration:** Chrome automation to access data not available via public APIs.
+* 📊 **Excel Engine:** Creation of professional reports with a unified format.
+* 🧠 **Gender Detection:** Integrated logic to classify profiles based on normalized name dictionaries.
+* 📂 **File Handling:** Management of JSON file uploads and reading for batch processing.
+* 🛡️ **CORS & Security:** Production-ready configuration for consumption from specific domains.
+* ⚡ **Async Processing:** Efficient promise management to avoid blocking the main thread during scraping.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Categoría | Tecnología |
+| Category | Technology |
 | :--- | :--- |
 | **Runtime** | Node.js 18+ |
 | **Framework** | Express.js |
@@ -49,55 +51,53 @@ El backend no es solo un puente de datos; es un **orquestador de automatización
 ### Prerequisites
 
 * Node.js 18+
-* Google Chrome (para Puppeteer en entorno local)
-* npm o yarn
+* Google Chrome (for Puppeteer in local environments)
+* npm or yarn
 
 ### Installation
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/SALVADORPOETA/Poder-judicial-backend-sm.git
 
-# Navegar al directorio
+# Navigate into the project directory
 cd poder-judicial-backend-sm
 
-# Instalar dependencias
+# Install dependencies
 npm install
 ```
 
 ### Environment Variables
 
-Crea un archivo `.env` en la raíz del proyecto:
+Create a `.env` file in the root directory:
 ```env
 PORT=3000
 FRONTEND_URL=http://localhost:5173
-# Configuraciones adicionales de API si es necesario
+# Additional API configurations if necessary
 ```
 
 ### Server Execution
 
 ```bash
-# Modo desarrollo
+# Development mode
 npm run dev
 
-# Modo producción
+# Production mode
 npm start
 ```
 
-El servidor estará escuchando en `http://localhost:3000`.
+The server will be listening at: `http://localhost:3000`.
 
 ---
 
-## 🔌 API Endpoints (Principales)
+## 🔌 API Endpoints (Main)
 
 ### Scraping
-* `POST /api/start-scraping`: Inicia la recolección de URLs de una lista específica del PJF.
-* `POST /api/scrape-details`: Recibe una lista de enlaces y realiza la extracción profunda de cada perfil.
+* `POST /api/start-scraping`: Starts URL collection from a specific PJF list.
+* `POST /api/scrape-details`: Receives a list of links and performs deep extraction for each profile.
 
-### Procesamiento
-* `POST /api/generate-excel`: Toma un objeto JSON y devuelve un archivo `.xlsx` listo para descargar.
-
-
+### Processing
+* `POST /api/generate-excel`: Takes a JSON object and returns a `.xlsx` file ready for download.
 
 ---
 
@@ -105,15 +105,15 @@ El servidor estará escuchando en `http://localhost:3000`.
 
 ```text
 backend/
-├─ session_whatsapp/    # Datos de sesión persistente de WhatsApp
-├─ wweb_session/        # Perfil de navegador para automatización web
-├─ Extra/               # Versiones alternativas de lógica (Server/Scraping)
-├─ messagingFunctions.js # Lógica de envío y plantillas
-├─ scrapingFunctions.js  # Scripts de extracción con Puppeteer
-├─ server.js            # Entry point y definición de rutas API
-├─ vercel.json          # Configuración para despliegue en Vercel
-├─ .env                 # Variables de entorno (Privado)
-├─ package.json         # Dependencias y scripts
+├─ session_whatsapp/    # Persistent WhatsApp session data
+├─ wweb_session/        # Browser profile for web automation
+├─ Extra/               # Alternative logic versions (Server/Scraping)
+├─ messagingFunctions.js # Messaging logic and templates
+├─ scrapingFunctions.js  # Extraction scripts with Puppeteer
+├─ server.js            # Entry point and API route definitions
+├─ vercel.json          # Configuration for Vercel deployment
+├─ .env                 # Environment variables (Private)
+├─ package.json         # Dependencies and scripts
 └─ README.md
 ```
 
@@ -121,19 +121,21 @@ backend/
 
 ## ⚙️ Scraping Logic & Performance
 
-El motor de scraping utiliza técnicas de **espera selectiva** y **selectores CSS dinámicos** para interactuar con la web del Poder Judicial. Se ha optimizado para:
-1.  Evitar bloqueos mediante el uso de User-Agents aleatorios.
-2.  Manejar tiempos de espera (timeouts) en caso de que el portal judicial esté lento.
-3.  Estructurar el HTML desordenado en objetos JSON limpios y listos para el frontend.
+The scraping engine uses **selective waiting** techniques and **dynamic CSS selectors** to interact with the Federal Judiciary website. It has been optimized to:
+1.  Avoid blocks by using randomized User-Agents.
+2.  Handle timeouts in case the judicial portal is slow.
+3.  Structure messy HTML into clean JSON objects ready for the frontend.
+
+
 
 ---
 
 ## 📌 Originality Statement
 
-Este backend es **original y desarrollado a medida**.
-* No utiliza wrappers de terceros para el scraping judicial.
-* La lógica de conversión de JSON a Excel fue personalizada para cumplir con los requisitos del reporte judicial.
-* El sistema de detección de género fue implementado específicamente para los nombres y títulos comunes en México y el sector legal.
+This backend is **original and custom-built**.
+* It does not use third-party wrappers for judicial scraping.
+* The JSON-to-Excel conversion logic was customized to meet judicial report requirements.
+* The gender detection system was specifically implemented for common names and titles in Mexico and the legal sector.
 
 ---
 
@@ -149,6 +151,6 @@ Este backend es **original y desarrollado a medida**.
 
 ## ⚖️ License
 
-Este es un proyecto de portafolio por **Salvador Martínez**.
-Uso comercial no autorizado.
-Todos los derechos reservados.
+This is a portfolio project by **Salvador Martínez**.
+No commercial use intended.
+All rights reserved to the author.
