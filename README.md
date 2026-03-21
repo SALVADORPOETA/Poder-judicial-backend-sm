@@ -94,7 +94,7 @@ npm run dev
 npm start
 ```
 
-The server will be listening at: `http://localhost:3000`.
+The server will be listening at: `http://localhost:3001`.
 
 ---
 
