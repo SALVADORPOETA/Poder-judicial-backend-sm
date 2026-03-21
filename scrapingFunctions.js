@@ -1,37 +1,46 @@
-const puppeteer = require('puppeteer')
-const fs = require('fs')
-const path = require('path')
+const chromium = require('@sparticuz/chromium')
 const XLSX = require('xlsx')
 
-const OUTPUT_DIR = path.join(__dirname, 'output')
-const ENLACES_DIR = path.join(OUTPUT_DIR, 'enlaces')
-const DETALLES_DIR = path.join(OUTPUT_DIR, 'detalles')
+// TRUCO DINÁMICO: Carga la librería correcta según el entorno
+const puppeteer =
+  process.env.NODE_ENV === 'production'
+    ? require('puppeteer-core')
+    : require('puppeteer')
 
-if (!fs.existsSync(ENLACES_DIR)) fs.mkdirSync(ENLACES_DIR, { recursive: true })
-if (!fs.existsSync(DETALLES_DIR))
-  fs.mkdirSync(DETALLES_DIR, { recursive: true })
+// Centralizamos las opciones para no repetir código
+const getOptions = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    return {
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    }
+  } else {
+    return {
+      args: ['--no-sandbox'],
+      headless: false, // Cámbialo a true si no quieres ver las ventanas en tu PC
+    }
+  }
+}
 
 async function runScrapeEnlaces(listId) {
-  const OUTPUT_FILE = path.join(ENLACES_DIR, `enlaces_electos_${listId}.json`)
-  const browser = await puppeteer.launch({
-    headless: false,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  })
+  const options = await getOptions()
+  const browser = await puppeteer.launch(options)
 
-  const page = await browser.newPage()
-  const BASE_URL = `https://candidaturaspoderjudicial.ine.mx/conoceTuNuevoPoderJudicial/${listId}`
+  const extraerPagina = async (numeroPagina) => {
+    const page = await browser.newPage()
+    try {
+      await page.setRequestInterception(true)
+      page.on('request', (req) => {
+        if (['image', 'font', 'stylesheet'].includes(req.resourceType()))
+          req.abort()
+        else req.continue()
+      })
 
-  try {
-    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' })
-
-    let totalLinks = []
-    let pageNumber = 1
-
-    while (true) {
-      console.log(`Procesando página ${pageNumber}...`)
-
-      // Esperar a que carguen los enlaces
-      await page.waitForSelector('.linkDetalleCandidato', { timeout: 30000 })
+      const url = `https://candidaturaspoderjudicial.ine.mx/conoceTuNuevoPoderJudicial/${listId}?page=${numeroPagina}`
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 })
+      await page.waitForSelector('.linkDetalleCandidato', { timeout: 10000 })
 
       const enlaces = await page.evaluate(() =>
         Array.from(document.querySelectorAll('.linkDetalleCandidato')).map(
@@ -39,80 +48,46 @@ async function runScrapeEnlaces(listId) {
         ),
       )
 
-      totalLinks = Array.from(new Set([...totalLinks, ...enlaces]))
-
-      // Guardar progreso inmediato
-      fs.writeFileSync(OUTPUT_FILE, JSON.stringify(totalLinks, null, 2))
-
-      // Intentar ir a la siguiente página
-      pageNumber++
-      const nextButton = await page.$(`li.ant-pagination-item-${pageNumber}`)
-
-      if (nextButton) {
-        await nextButton.click()
-        await new Promise((r) => setTimeout(r, 2000)) // Esperar carga
-      } else {
-        break // No hay más páginas
-      }
+      await page.close()
+      return enlaces
+    } catch (e) {
+      await page.close()
+      return []
     }
-
-    await browser.close()
-    return { total: totalLinks.length, file: OUTPUT_FILE }
-  } catch (error) {
-    if (browser) await browser.close()
-    throw error
   }
+
+  const paginas = [1, 2, 3, 4, 5]
+  const resultadosArray = await Promise.all(
+    paginas.map((p) => extraerPagina(p)),
+  )
+  const totalLinks = Array.from(new Set(resultadosArray.flat()))
+
+  await browser.close()
+  return totalLinks
 }
 
-async function runScrapeDetalles(enlaces, listId) {
-  const browser = await puppeteer.launch({
-    headless: false, // Lo mantenemos visible para monitorear
-    protocolTimeout: 120000,
-    args: [
-      '--window-size=900,800',
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-    ],
-  })
+async function runScrapeDetalles(enlaces) {
+  const options = await getOptions()
+  const browser = await puppeteer.launch(options)
 
-  const page = await browser.newPage()
-  await page.setViewport({ width: 850, height: 700 })
-
-  // Anti-detección básica
-  await page.evaluateOnNewDocument(() => {
-    Object.defineProperty(navigator, 'webdriver', { get: () => false })
-  })
-
-  const resultados = []
-  console.log(
-    `>>> Procesando ${enlaces.length} perfiles con selectores reales...`,
-  )
-
-  for (let i = 0; i < enlaces.length; i++) {
-    const url = enlaces[i]
+  const extraerUnPerfil = async (url) => {
+    const page = await browser.newPage()
     try {
-      console.log(`[${i + 1}/${enlaces.length}] Extrayendo: ${url}`)
-
-      await page.goto(url, {
-        waitUntil: 'networkidle2',
-        timeout: 90000,
+      await page.setRequestInterception(true)
+      page.on('request', (req) => {
+        if (['image', 'stylesheet', 'font'].includes(req.resourceType()))
+          req.abort()
+        else req.continue()
       })
 
-      // Simular interacción humana: scroll y espera
-      await page.evaluate(() => window.scrollBy(0, 300))
-      await new Promise((r) => setTimeout(r, 3000))
-
-      // Esperar a que el selector crítico aparezca
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 })
       await page.waitForSelector('[data-det="nombreCandidato"]', {
-        visible: true,
-        timeout: 40000,
+        timeout: 15000,
       })
 
       const datos = await page.evaluate(() => {
         const getText = (s) =>
           document.querySelector(s)?.textContent.trim() || 'No disponible'
-
         const correos = Array.from(
           document.querySelectorAll('[data-det="correoElecPublico"]'),
         )
@@ -127,64 +102,28 @@ async function runScrapeDetalles(enlaces, listId) {
         }
       })
 
-      resultados.push({ url, ...datos })
-      console.log(`   ✅ Capturado: ${datos.nombre}`)
+      await page.close()
+      return { url, ...datos, success: true }
     } catch (err) {
-      console.error(`   ⚠️ Error en ${url}:`, err.message.substring(0, 50))
-      resultados.push({ url, error: 'Dato no disponible / Timeout' })
+      await page.close()
+      return { url, error: 'Error de carga', success: false }
     }
-
-    // Guardado incremental para no perder datos si algo falla
-    const tempFileName = `detalles_lista_${listId}.json`
-    fs.writeFileSync(
-      path.join(DETALLES_DIR, tempFileName),
-      JSON.stringify(resultados, null, 2),
-    )
   }
+
+  // En Vercel no proceses más de 5-10 de golpe para no saturar la RAM
+  const resultados = await Promise.all(
+    enlaces.map((url) => extraerUnPerfil(url)),
+  )
 
   await browser.close()
-
-  const finalPath = path.join(DETALLES_DIR, `detalles_lista_${listId}.json`)
-  return { total: resultados.length, path: finalPath }
+  return resultados
 }
 
-async function jsonToExcel(listId) {
-  try {
-    // Definimos las rutas basadas en tu estructura actual
-    const INPUT_FILE = path.join(DETALLES_DIR, `detalles_lista_${listId}.json`)
-    const XLSX_FOLDER = path.join(OUTPUT_DIR, 'xlsx')
-    const OUTPUT_FILE = path.join(XLSX_FOLDER, `reporte_lista_${listId}.xlsx`)
-
-    // Crear carpeta xlsx si no existe
-    if (!fs.existsSync(XLSX_FOLDER))
-      fs.mkdirSync(XLSX_FOLDER, { recursive: true })
-
-    if (!fs.existsSync(INPUT_FILE)) {
-      throw new Error(`No existe el JSON de detalles para la lista: ${listId}`)
-    }
-
-    // Leer el JSON de la carpeta 'detalles'
-    const datos = JSON.parse(fs.readFileSync(INPUT_FILE, 'utf-8'))
-
-    // Crear la hoja y el libro
-    const hoja = XLSX.utils.json_to_sheet(datos)
-    const libro = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(libro, hoja, `Lista_${listId}`)
-
-    // Escribir el archivo
-    XLSX.writeFile(libro, OUTPUT_FILE)
-
-    console.log(`📊 Excel generado: ${OUTPUT_FILE}`)
-    return {
-      success: true,
-      path: OUTPUT_FILE,
-      fileName: `reporte_lista_${listId}.xlsx`,
-    }
-  } catch (error) {
-    console.error('Error al generar Excel:', error)
-    throw error
-  }
+async function jsonToExcelBuffer(datos) {
+  const hoja = XLSX.utils.json_to_sheet(datos)
+  const libro = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(libro, hoja, 'Candidatos')
+  return XLSX.write(libro, { type: 'buffer', bookType: 'xlsx' })
 }
 
-// Actualiza tus exports
-module.exports = { runScrapeEnlaces, runScrapeDetalles, jsonToExcel }
+module.exports = { runScrapeEnlaces, runScrapeDetalles, jsonToExcelBuffer }

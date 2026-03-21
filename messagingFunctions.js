@@ -1,76 +1,118 @@
-const puppeteer = require('puppeteer')
+const chromium = require('@sparticuz/chromium')
+
+const puppeteer =
+  process.env.NODE_ENV === 'production'
+    ? require('puppeteer-core')
+    : require('puppeteer')
+
+const getOptions = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    return {
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    }
+  } else {
+    return {
+      args: [
+        '--no-sandbox',
+        // '--start-maximized', // <--- 1. Inicia la ventana maximizada
+      ],
+      headless: false,
+      userDataDir: './wweb_session',
+      // defaultViewport: null, // <--- 2. CRÍTICO: Evita que Puppeteer fuerce el tamaño 800x600
+    }
+  }
+}
 
 let browser
-let page
 
 /**
- * Inicializa el navegador para WhatsApp.
- * Se mantiene abierto para no tener que escanear el QR cada vez.
+ * Función interna para enviar un solo mensaje
+ * (Ahora integrada para que el bucle for...of la reconozca)
  */
-async function initWhatsApp() {
-  if (!browser || !browser.isConnected()) {
-    browser = await puppeteer.launch({
-      headless: false,
-      userDataDir: './session_whatsapp', // Tu carpeta de sesión
-      // 1. Agregamos el flag de la ventana maximizada
-      args: ['--no-sandbox', '--start-maximized', '--disable-setuid-sandbox'],
-      // 2. IMPORTANTE: Esto quita el límite de 800x600 píxeles
-      defaultViewport: null,
+async function enviarUno(item) {
+  const numLimpio = item.telefono.replace(/\D/g, '')
+  const tlf = numLimpio.startsWith('52') ? numLimpio : `52${numLimpio}`
+  const url = `https://web.whatsapp.com/send?phone=${tlf}&text=${encodeURIComponent(item.mensaje)}`
+
+  const newPage = await browser.newPage()
+  try {
+    await newPage.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
+    await newPage.waitForSelector('div[contenteditable="true"]', {
+      timeout: 30000,
     })
-    page = await browser.newPage()
-    await page.goto('https://web.whatsapp.com')
+
+    // Delay aleatorio y envío
+    const delay = Math.floor(Math.random() * 3000) + 3000
+    await new Promise((r) => setTimeout(r, delay))
+    await newPage.keyboard.press('Enter')
+
+    // Esperar a que el "check" salga antes de cerrar
+    await new Promise((r) => setTimeout(r, 5000))
+
+    await newPage.close() // <--- CIERRA LA PESTAÑA AQUÍ
+    console.log(`✅ Enviado: ${item.nombre}`)
+    return { success: true, nombre: item.nombre }
+  } catch (e) {
+    console.error(`❌ Error en ${item.nombre}: ${e.message}`)
+    await newPage.close() // <--- CIERRA LA PESTAÑA TAMBIÉN EN ERROR
+    return { success: false, nombre: item.nombre, error: e.message }
   }
+}
+
+async function initWhatsApp() {
+  const options = await getOptions()
+  browser = await puppeteer.launch(options)
+  const page = await browser.newPage()
+  await page.setUserAgent(
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+  )
+  await page.goto('https://web.whatsapp.com')
   return page
 }
 
-/**
- * Procesa la lista de envíos uno por uno
- */
 async function sendWhatsAppBulk(lista) {
-  const page = await initWhatsApp()
-
-  let enviados = 0
-  let errores = 0
-
-  for (const item of lista) {
-    try {
-      const tlf = item.telefono.replace(/\D/g, '')
-      if (!tlf) continue
-
-      const numeroConPrefijo = `52${tlf}` // Prefijo México
-      // Usamos el mensaje personalizado si existe, si no el genérico
-      const mensaje = item.mensaje
-
-      const url = `https://web.whatsapp.com/send?phone=${numeroConPrefijo}&text=${encodeURIComponent(mensaje)}`
-
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
-
-      // Esperar a que el selector de mensaje sea visible (indicador de que cargó el chat)
-      await page.waitForSelector('div[contenteditable="true"]', {
-        timeout: 20000,
-      })
-
-      await new Promise((r) => setTimeout(r, 1500)) // Respiro humano
-
-      await page.keyboard.press('Enter')
-
-      console.log(
-        `✅ Enviado a: ${item.nombreEditado || item.nombre} (${numeroConPrefijo})`,
-      )
-      enviados++
-
-      // Delay de 4 seg para evitar que WhatsApp sospeche
-      await new Promise((r) => setTimeout(r, 4000))
-    } catch (err) {
-      console.error(
-        `❌ Error con ${item.nombre}:`,
-        err.message.substring(0, 50),
-      )
-      errores++
+  try {
+    if (!browser || !browser.connected) {
+      const options = await getOptions()
+      browser = await puppeteer.launch(options)
     }
-  }
 
-  return { enviados, errores }
+    // --- TRUCO AQUÍ ---
+    // Puppeteer abre una pestaña en blanco por defecto ("about:blank").
+    // Vamos a obtener todas las pestañas abiertas y cerrar las que no sirvan.
+    const pages = await browser.pages()
+    if (pages.length > 1) {
+      // Si hay más de una, cerramos las extras para empezar limpios
+      for (let i = 1; i < pages.length; i++) await pages[i].close()
+    }
+    // ------------------
+
+    const resultados = []
+
+    for (const item of lista) {
+      const res = await enviarUno(item)
+      resultados.push(res)
+      await new Promise((r) => setTimeout(r, 2000))
+    }
+
+    await browser.close()
+    browser = null
+    return resultados
+  } catch (globalError) {
+    console.error('❌ Error crítico:', globalError.message)
+    if (browser) {
+      await browser.close()
+      browser = null
+    }
+    return lista.map((item) => ({
+      success: false,
+      nombre: item.nombre,
+      error: globalError.message,
+    }))
+  }
 }
 
 module.exports = { sendWhatsAppBulk, initWhatsApp }
