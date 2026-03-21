@@ -105,16 +105,16 @@ El servidor estará escuchando en `http://localhost:3000`.
 ## 📂 Project Structure
 
 ```text
-pjf-backend-sm/
-├─ src/
-│  ├─ controllers/      # Lógica de los endpoints
-│  ├─ scraping/         # Scripts de Puppeteer y automatización
-│  ├─ utils/            # Procesadores de nombres y generadores de Excel
-│  ├─ routes/           # Definición de rutas de la API
-│  └─ server.js         # Punto de entrada de la aplicación
-├─ data/                # Almacenamiento temporal o diccionarios
-├─ .env.example
-├─ package.json
+backend/
+├─ session_whatsapp/    # Datos de sesión persistente de WhatsApp
+├─ wweb_session/        # Perfil de navegador para automatización web
+├─ Extra/               # Versiones alternativas de lógica (Server/Scraping)
+├─ messagingFunctions.js # Lógica de envío y plantillas
+├─ scrapingFunctions.js  # Scripts de extracción con Puppeteer
+├─ server.js            # Entry point y definición de rutas API
+├─ vercel.json          # Configuración para despliegue en Vercel
+├─ .env                 # Variables de entorno (Privado)
+├─ package.json         # Dependencias y scripts
 └─ README.md
 ```
 
