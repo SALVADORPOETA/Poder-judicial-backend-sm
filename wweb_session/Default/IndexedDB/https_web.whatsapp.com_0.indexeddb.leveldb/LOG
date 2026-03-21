@@ -1,20 +1,20 @@
-2026/03/20-01:29:35.539 255c Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/03/20-01:29:35.540 255c Recovering log #156
-2026/03/20-01:29:35.640 255c Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000156.log 
-2026/03/20-01:29:59.676 255c Level-0 table #165: started
-2026/03/20-01:29:59.725 255c Level-0 table #165: 1176819 bytes OK
-2026/03/20-01:29:59.728 255c Delete type=0 #156
-2026/03/20-01:30:00.478 255c Compacting 1@1 + 5@2 files
-2026/03/20-01:30:00.648 255c Generated table #166@1: 81421 keys, 2297703 bytes
-2026/03/20-01:30:00.795 255c Generated table #167@1: 37943 keys, 2217041 bytes
-2026/03/20-01:30:00.897 255c Generated table #168@1: 26603 keys, 2168491 bytes
-2026/03/20-01:30:01.095 255c Generated table #169@1: 111757 keys, 2265383 bytes
-2026/03/20-01:30:01.145 255c Generated table #170@1: 23359 keys, 602384 bytes
-2026/03/20-01:30:01.145 255c Compacted 1@1 + 5@2 files => 9551002 bytes
-2026/03/20-01:30:01.147 255c compacted to: files[ 0 0 5 0 0 0 0 ]
-2026/03/20-01:30:01.148 255c Delete type=2 #158
-2026/03/20-01:30:01.148 255c Delete type=2 #159
-2026/03/20-01:30:01.148 255c Delete type=2 #160
-2026/03/20-01:30:01.148 255c Delete type=2 #161
-2026/03/20-01:30:01.148 255c Delete type=2 #162
-2026/03/20-01:30:01.148 255c Delete type=2 #165
+2026/03/20-20:20:25.375 2d94 Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/20-20:20:25.377 2d94 Recovering log #164
+2026/03/20-20:20:25.407 2d94 Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000164.log 
+2026/03/20-20:21:01.468 23cc Level-0 table #173: started
+2026/03/20-20:21:01.533 23cc Level-0 table #173: 1186290 bytes OK
+2026/03/20-20:21:01.536 23cc Delete type=0 #164
+2026/03/20-20:21:01.566 23cc Compacting 1@1 + 5@2 files
+2026/03/20-20:21:01.760 23cc Generated table #174@1: 85027 keys, 2257216 bytes
+2026/03/20-20:21:01.902 23cc Generated table #175@1: 34716 keys, 2263374 bytes
+2026/03/20-20:21:02.000 23cc Generated table #176@1: 23211 keys, 2172358 bytes
+2026/03/20-20:21:02.221 23cc Generated table #177@1: 110626 keys, 2263503 bytes
+2026/03/20-20:21:02.283 23cc Generated table #178@1: 32960 keys, 808883 bytes
+2026/03/20-20:21:02.283 23cc Compacted 1@1 + 5@2 files => 9765334 bytes
+2026/03/20-20:21:02.284 23cc compacted to: files[ 0 0 5 0 0 0 0 ]
+2026/03/20-20:21:02.284 23cc Delete type=2 #166
+2026/03/20-20:21:02.285 23cc Delete type=2 #167
+2026/03/20-20:21:02.285 23cc Delete type=2 #168
+2026/03/20-20:21:02.285 23cc Delete type=2 #169
+2026/03/20-20:21:02.285 23cc Delete type=2 #170
+2026/03/20-20:21:02.285 23cc Delete type=2 #173

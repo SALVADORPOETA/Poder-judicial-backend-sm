@@ -21,7 +21,7 @@ const getOptions = async () => {
       ],
       headless: false,
       userDataDir: './wweb_session',
-      // defaultViewport: null, // <--- 2. CRÍTICO: Evita que Puppeteer fuerce el tamaño 800x600
+      defaultViewport: null, // <--- 2. CRÍTICO: Evita que Puppeteer fuerce el tamaño 800x600
     }
   }
 }
