@@ -5,7 +5,6 @@
 This server is designed to handle complex asynchronous workflows, ensuring that data extraction is precise, structured, and ready for immediate consumption by the frontend.
 
 <img width="787" height="631" alt="pj-acceso" src="https://github.com/user-attachments/assets/c11ec25b-7311-4011-96b1-73da6aef7ca0" />
-<img width="787" height="631" alt="pj-panel" src="https://github.com/user-attachments/assets/751f86a3-7fcf-4c32-b704-b5fcded28a30" />
 
 ---
 
@@ -19,7 +18,7 @@ The backend is not just a data bridge; it is an **automation orchestrator** that
 * **Scalable Architecture:** Endpoints optimized to handle long-running requests (detailed scraping).
 * **Data Security:** Schema validation and robust error handling to prevent failures in bulk processes.
 
-
+<img width="787" height="631" alt="pj-panel" src="https://github.com/user-attachments/assets/751f86a3-7fcf-4c32-b704-b5fcded28a30" />
 
 ---
 
