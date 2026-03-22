@@ -18,7 +18,7 @@ The backend is not just a data bridge; it is an **automation orchestrator** that
 * **Scalable Architecture:** Endpoints optimized to handle long-running requests (detailed scraping).
 * **Data Security:** Schema validation and robust error handling to prevent failures in bulk processes.
 
-<img width="809" height="633" alt="pj-panel" src="https://github.com/user-attachments/assets/9072fedc-601a-4ae3-9b6e-c1bf80b7887c" />
+<img width="785" height="631" alt="pj-panel" src="https://github.com/user-attachments/assets/76e46ef9-7ade-4b63-a490-01c5dae12374" />
 
 ---
 
