@@ -71,19 +71,16 @@ npm install
 
 ### Environment Variables
 
-Create a `.env` file in the root directory:
+Create a `.env.development` file in the root directory:
 ```env
 PORT=3001
 NODE_ENV=development
 MODO_HIBRIDO=false
 
 FRONTEND_URL_DEV=http://localhost:5173
-FRONTEND_URL_PROD=https://your-link.vercel.app
 
 SMTP_USER=your@email.com
 SMTP_PASS=your-email-password
-
-COMANDO_NGROK='ngrok http --url=your-link.ngrok-free.dev 3001'
 ```
 
 ### Server Execution
