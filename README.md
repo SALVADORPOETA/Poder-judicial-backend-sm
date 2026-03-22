@@ -4,6 +4,8 @@
 
 This server is designed to handle complex asynchronous workflows, ensuring that data extraction is precise, structured, and ready for immediate consumption by the frontend.
 
+<img width="787" height="631" alt="pj-acceso" src="https://github.com/user-attachments/assets/c11ec25b-7311-4011-96b1-73da6aef7ca0" />
+
 ---
 
 ## ✨ Overview
