@@ -80,9 +80,21 @@ MODO_HIBRIDO=false
 FRONTEND_URL_DEV=http://localhost:5173
 
 SMTP_USER=your@email.com
-SMTP_PASS=your-email-password
+SMTP_PASS=[Email Password]
 ```
 
+Create a `.env.production` file in the root directory:
+```env
+PORT=3001
+NODE_ENV=production
+MODO_HIBRIDO=true
+
+FRONTEND_URL_DEV=http://localhost:5173
+FRONTEND_URL_PROD=https://your-link.vercel.app
+
+SMTP_USER=your@email.com
+SMTP_PASS=[Email Password]
+```
 ### Server Execution
 
 ```bash
