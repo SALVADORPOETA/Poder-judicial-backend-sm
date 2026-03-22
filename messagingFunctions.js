@@ -1,28 +1,34 @@
 const chromium = require('@sparticuz/chromium')
+const path = require('path')
 
+// 1. Detectamos si es Modo Híbrido
+const isHybrid = process.env.MODO_HIBRIDO === 'true'
+
+// 2. Cargamos el Puppeteer correcto
 const puppeteer =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV === 'production' && !isHybrid
     ? require('puppeteer-core')
     : require('puppeteer')
 
 const getOptions = async () => {
-  if (process.env.NODE_ENV === 'production') {
+  // --- LÓGICA PARA TU PC (DESARROLLO O HÍBRIDO) ---
+  if (process.env.NODE_ENV !== 'production' || isHybrid) {
+    console.log('🖥️  WhatsApp: Usando motor Local/Híbrido')
     return {
-      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: false, // Para WhatsApp es mejor ver la ventana para el QR
+      userDataDir: path.join(__dirname, 'wweb_session'), // Ruta absoluta más segura
+      defaultViewport: null,
     }
-  } else {
-    return {
-      args: [
-        '--no-sandbox',
-        // '--start-maximized', // <--- 1. Inicia la ventana maximizada
-      ],
-      headless: false,
-      userDataDir: './wweb_session',
-      defaultViewport: null, // <--- 2. CRÍTICO: Evita que Puppeteer fuerce el tamaño 800x600
-    }
+  }
+
+  // --- LÓGICA PARA LA NUBE (PRODUCCIÓN REAL) ---
+  console.log('☁️  WhatsApp: Usando motor de Nube')
+  return {
+    args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
   }
 }
 
@@ -53,7 +59,7 @@ async function enviarUno(item) {
     await new Promise((r) => setTimeout(r, 5000))
 
     await newPage.close() // <--- CIERRA LA PESTAÑA AQUÍ
-    console.log(`✅ Enviado: ${item.nombre}`)
+    console.log(`✅ WhatsApp enviado a: ${item.nombre}`)
     return { success: true, nombre: item.nombre }
   } catch (e) {
     console.error(`❌ Error en ${item.nombre}: ${e.message}`)

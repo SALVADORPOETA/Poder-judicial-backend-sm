@@ -1,26 +1,33 @@
 const chromium = require('@sparticuz/chromium')
 const XLSX = require('xlsx')
 
-// TRUCO DINÁMICO: Carga la librería correcta según el entorno
+// 1. Decidimos qué Puppeteer usar
+// Si es Híbrido, necesitamos el 'puppeteer' normal porque corre en tu Windows
+const isHybrid = process.env.MODO_HIBRIDO === 'true'
+
 const puppeteer =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV === 'production' && !isHybrid
     ? require('puppeteer-core')
     : require('puppeteer')
 
-// Centralizamos las opciones para no repetir código
+// 2. Centralizamos las opciones
 const getOptions = async () => {
-  if (process.env.NODE_ENV === 'production') {
+  // Si estamos en tu PC (Ya sea desarrollo o Modo Híbrido)
+  if (process.env.NODE_ENV !== 'production' || isHybrid) {
+    console.log('🖥️  Ejecutando Puppeteer en modo LOCAL/HÍBRIDO')
     return {
-      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: false, // "new" es la recomendada en versiones recientes, o true/false
     }
-  } else {
-    return {
-      args: ['--no-sandbox'],
-      headless: false, // Cámbialo a true si no quieres ver las ventanas en tu PC
-    }
+  }
+
+  // Si el BACKEND está realmente subido a la nube (Vercel/Railway)
+  console.log('☁️  Ejecutando Puppeteer en modo NUBE')
+  return {
+    args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
   }
 }
 

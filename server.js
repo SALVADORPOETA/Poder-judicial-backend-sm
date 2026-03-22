@@ -1,7 +1,13 @@
 const express = require('express')
 const cors = require('cors')
 const nodemailer = require('nodemailer')
-require('dotenv').config()
+const path = require('path')
+const envFile =
+  process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development'
+require('dotenv').config({ path: path.join(__dirname, envFile) })
+// require('dotenv').config()
+console.log(`Configuración cargada desde: ${envFile}`)
+console.log(`MODO_HIBRIDO es: ${process.env.MODO_HIBRIDO}`)
 
 // Importamos tus funciones optimizadas (las que devuelven arrays, no archivos)
 const {
@@ -36,6 +42,12 @@ app.use(
       }
     },
     credentials: true,
+    // AÑADE ESTO PARA NGROK:
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'ngrok-skip-browser-warning',
+    ],
   }),
 )
 
@@ -116,6 +128,11 @@ app.post('/api/generate-excel', async (req, res) => {
 
 app.post('/api/send-email-bulk', async (req, res) => {
   const { lista } = req.body
+  if (!lista || !Array.isArray(lista)) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'La lista de correos es inválida.' })
+  }
   const transporter = nodemailer.createTransport({
     host: 'smtp.hostinger.com',
     port: 465,
@@ -128,6 +145,8 @@ app.post('/api/send-email-bulk', async (req, res) => {
   })
 
   let enviados = 0
+  const total = lista.length
+
   for (let i = 0; i < lista.length; i++) {
     try {
       await transporter.sendMail({
@@ -137,7 +156,9 @@ app.post('/api/send-email-bulk', async (req, res) => {
         html: lista[i].cuerpo,
       })
       enviados++
-      if (i < lista.length - 1) await new Promise((r) => setTimeout(r, 2000))
+      console.log(`✅ Correo enviado a: ${lista[i].email}`)
+      // Delay para evitar ser marcado como SPAM
+      if (i < total - 1) await new Promise((r) => setTimeout(r, 2000))
     } catch (err) {
       console.error(`Error en ${lista[i].email}:`, err.message)
     }
@@ -146,7 +167,7 @@ app.post('/api/send-email-bulk', async (req, res) => {
   res.json({
     success: true,
     enviados,
-    message: `Se enviaron ${enviados} correos correctamente`,
+    message: `Proceso completado. Enviados: ${enviados} de ${total}`,
   })
 })
 
@@ -181,6 +202,56 @@ app.post('/api/send-whatsapp-bulk', async (req, res) => {
       message: 'Error interno del servidor',
       error: err.message,
     })
+  }
+})
+
+// --- RUTA GENERADOR VCF ---
+app.post('/api/generate-vcf', (req, res) => {
+  const { lista, pj } = req.body
+
+  if (!lista || !Array.isArray(lista)) {
+    return res.status(400).json({ error: 'Lista inválida' })
+  }
+
+  try {
+    const vcfContent = lista
+      .map((item) => {
+        // VALIDACIÓN DEFENSIVA: Si el item es nulo o no es objeto, lo saltamos
+        if (!item || typeof item !== 'object') return null
+
+        // Extraemos campos con valores por defecto para evitar el error de 'undefined'
+        const contacto = item.contacto || item.nombre || 'Sin Nombre'
+        const telefono = item.telefono || item.tel || ''
+        const correo = item.correo || item.email || ''
+
+        // Ahora el .replace() nunca fallará porque 'contacto' siempre es un string
+        const nombreLimpio = contacto.replace(/\s*-\s*pj\d+$/i, '').trim()
+
+        return [
+          'BEGIN:VCARD',
+          'VERSION:3.0',
+          `FN:${nombreLimpio}`,
+          `TEL;TYPE=CELL:${telefono}`,
+          `EMAIL;TYPE=INTERNET:${correo}`,
+          `NOTE:pj${pj || 'extraida'}`,
+          'END:VCARD',
+        ].join('\n')
+      })
+      .filter((vcard) => vcard !== null) // Eliminamos los nulos si hubo errores en el map
+      .join('\n\n')
+
+    res.setHeader('Content-Type', 'text/vcard')
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=contactos_lista_${pj || 'extraida'}.vcf`,
+    )
+
+    res.send(vcfContent)
+  } catch (error) {
+    console.error('❌ Error crítico generando VCF:', error)
+    res
+      .status(500)
+      .json({ error: 'Error al procesar el formato de los contactos' })
   }
 })
 
