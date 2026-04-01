@@ -1,20 +1,9 @@
-2026/03/22-15:22:42.736 3504 Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/03/22-15:22:42.737 3504 Recovering log #221
-2026/03/22-15:22:42.808 3504 Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000221.log 
-2026/03/22-15:22:51.665 3b40 Level-0 table #230: started
-2026/03/22-15:22:51.722 3b40 Level-0 table #230: 1069591 bytes OK
-2026/03/22-15:22:51.726 3b40 Delete type=0 #221
-2026/03/22-15:22:51.755 3b40 Compacting 1@1 + 5@2 files
-2026/03/22-15:22:51.908 3b40 Generated table #231@1: 84925 keys, 2233654 bytes
-2026/03/22-15:22:52.018 3b40 Generated table #232@1: 43179 keys, 2321433 bytes
-2026/03/22-15:22:52.122 3b40 Generated table #233@1: 38574 keys, 2197863 bytes
-2026/03/22-15:22:52.229 3b40 Generated table #234@1: 75212 keys, 2215311 bytes
-2026/03/22-15:22:52.331 3b40 Generated table #235@1: 69548 keys, 1546136 bytes
-2026/03/22-15:22:52.331 3b40 Compacted 1@1 + 5@2 files => 10514397 bytes
-2026/03/22-15:22:52.332 3b40 compacted to: files[ 0 0 5 0 0 0 0 ]
-2026/03/22-15:22:52.333 3b40 Delete type=2 #223
-2026/03/22-15:22:52.333 3b40 Delete type=2 #224
-2026/03/22-15:22:52.333 3b40 Delete type=2 #225
-2026/03/22-15:22:52.333 3b40 Delete type=2 #226
-2026/03/22-15:22:52.333 3b40 Delete type=2 #227
-2026/03/22-15:22:52.334 3b40 Delete type=2 #230
+2026/03/23-17:53:26.627 374c Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/23-17:53:26.629 374c Recovering log #244
+2026/03/23-17:53:26.671 374c Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000244.log 
+2026/03/23-17:53:26.671 374c Delete type=2 #239
+2026/03/23-17:53:26.671 374c Delete type=2 #240
+2026/03/23-17:53:26.672 374c Delete type=2 #241
+2026/03/23-17:53:26.672 374c Delete type=2 #242
+2026/03/23-17:53:26.672 374c Delete type=2 #243
+2026/03/23-17:53:26.672 374c Delete type=2 #245

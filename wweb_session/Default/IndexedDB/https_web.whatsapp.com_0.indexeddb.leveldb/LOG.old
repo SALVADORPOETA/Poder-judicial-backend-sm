@@ -1,9 +1,31 @@
-2026/03/22-04:49:59.516 ce8 Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/03/22-04:49:59.518 ce8 Recovering log #221
-2026/03/22-04:49:59.551 ce8 Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000221.log 
-2026/03/22-04:49:59.552 ce8 Delete type=2 #215
-2026/03/22-04:49:59.553 ce8 Delete type=2 #216
-2026/03/22-04:49:59.553 ce8 Delete type=2 #217
-2026/03/22-04:49:59.553 ce8 Delete type=2 #218
-2026/03/22-04:49:59.553 ce8 Delete type=2 #219
-2026/03/22-04:49:59.554 ce8 Delete type=2 #222
+2026/03/23-17:49:43.453 296c Reusing MANIFEST C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/23-17:49:43.455 296c Recovering log #229
+2026/03/23-17:49:43.583 296c Reusing old log C:\Users\DELL\OneDrive\Escritorio\Trabajo\Programming\Full-Stack\Projects\poder-judicial-sm\backend\wweb_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000229.log 
+2026/03/23-17:49:51.917 2a48 Level-0 table #238: started
+2026/03/23-17:49:52.062 2a48 Level-0 table #238: 1081752 bytes OK
+2026/03/23-17:49:52.064 2a48 Delete type=0 #229
+2026/03/23-17:49:53.983 2a48 Compacting 1@1 + 5@2 files
+2026/03/23-17:49:54.189 2a48 Generated table #239@1: 83842 keys, 2232303 bytes
+2026/03/23-17:49:54.344 2a48 Generated table #240@1: 45490 keys, 2325889 bytes
+2026/03/23-17:49:54.545 2a48 Generated table #241@1: 39347 keys, 2199659 bytes
+2026/03/23-17:49:54.788 2a48 Generated table #242@1: 71297 keys, 2212019 bytes
+2026/03/23-17:49:54.962 2a48 Generated table #243@1: 74499 keys, 1655360 bytes
+2026/03/23-17:49:54.962 2a48 Compacted 1@1 + 5@2 files => 10625230 bytes
+2026/03/23-17:49:54.963 2a48 compacted to: files[ 0 0 5 0 0 0 0 ]
+2026/03/23-17:49:57.399 2a48 Level-0 table #245: started
+2026/03/23-17:49:57.453 2a48 Level-0 table #245: 898391 bytes OK
+2026/03/23-17:49:57.457 2a48 Delete type=2 #231
+2026/03/23-17:49:57.458 2a48 Delete type=2 #232
+2026/03/23-17:49:57.459 2a48 Delete type=2 #233
+2026/03/23-17:49:57.459 2a48 Delete type=2 #234
+2026/03/23-17:49:57.459 2a48 Delete type=2 #235
+2026/03/23-17:49:57.459 2a48 Delete type=0 #237
+2026/03/23-17:49:57.459 2a48 Delete type=2 #238
+2026/03/23-17:49:57.466 2a48 Compacting 1@1 + 5@2 files
+2026/03/23-17:49:57.671 2a48 Generated table #246@1: 81898 keys, 2230149 bytes
+2026/03/23-17:49:57.792 2a48 Generated table #247@1: 48290 keys, 2335194 bytes
+2026/03/23-17:49:57.936 2a48 Generated table #248@1: 39912 keys, 2199769 bytes
+2026/03/23-17:49:58.070 2a48 Generated table #249@1: 66953 keys, 2206761 bytes
+2026/03/23-17:49:58.209 2a48 Generated table #250@1: 78912 keys, 1744652 bytes
+2026/03/23-17:49:58.210 2a48 Compacted 1@1 + 5@2 files => 10716525 bytes
+2026/03/23-17:49:58.211 2a48 compacted to: files[ 0 0 5 0 0 0 0 ]
